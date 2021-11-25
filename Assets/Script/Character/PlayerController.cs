@@ -6,10 +6,12 @@ using UnityEngine.AI;
 public class PlayerController : MonoBehaviour
 {
     private NavMeshAgent agent;
+    private Animator animator;
 
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
+        animator = GetComponent<Animator>();
     }
 
     // Start is called before the first frame update
@@ -26,6 +28,10 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        switchAnimation();
+    }
 
+    private void switchAnimation(){
+        animator.SetFloat("Speed",agent.velocity.sqrMagnitude);
     }
 }
