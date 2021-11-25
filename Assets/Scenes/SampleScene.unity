@@ -6045,6 +6045,18 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &613408533
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 613408529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4c1ed46a551442bbbda0ee2b501a1ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &618190739
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13690,7 +13702,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh23254
+  m_Name: pb_Mesh78792
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -20011,21 +20023,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 793c217c1cb2f49ccb69aedf020b4013, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onMouseClick:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 613408530}
-        m_TargetAssemblyTypeName: UnityEngine.AI.NavMeshAgent, UnityEngine
-        m_MethodName: set_destination
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+  point: {fileID: 2800000, guid: 680409b8f359e414da897795c7d44080, type: 3}
+  doorway: {fileID: 2800000, guid: 60a28cd039f51450cb761904d8224629, type: 3}
+  attack: {fileID: 2800000, guid: 52efcf69e941a48ec937153b7284c565, type: 3}
+  target: {fileID: 2800000, guid: 08f33da1cd5a1485e98c98e96181ea90, type: 3}
+  arrow: {fileID: 2800000, guid: 91741e4becddd437a97c3295a0a3b865, type: 3}
 --- !u!4 &1859523411
 Transform:
   m_ObjectHideFlags: 0
@@ -78654,9 +78656,15 @@ MonoBehaviour:
   assetGuid: 
   m_Mesh: {fileID: 1343147154}
   m_IsSelectable: 1
-  m_SelectedFaces: 
-  m_SelectedEdges: []
-  m_SelectedVertices: 
+  m_SelectedFaces: a7030000
+  m_SelectedEdges:
+  - a: 2805
+    b: 2806
+  - a: 2806
+    b: 2807
+  - a: 2807
+    b: 2805
+  m_SelectedVertices: f50a0000f60a0000f70a0000
 --- !u!4 &2046721104
 Transform:
   m_ObjectHideFlags: 0
