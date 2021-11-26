@@ -15,6 +15,7 @@ public class MouseManager : MonoBehaviour
     public static MouseManager Instance;
     // public EventVector3 onMouseClick;
     public event Action<Vector3> onMouseClick;
+    public event Action<GameObject> onEnemyClick;
 
     public Texture2D point, doorway, attack, target, arrow;
 
@@ -47,7 +48,7 @@ public class MouseManager : MonoBehaviour
                     Cursor.SetCursor(target, new Vector2(16, 16), CursorMode.Auto);
                     break;
                 case "Enemy":
-                    Cursor.SetCursor(target, new Vector2(16, 16), CursorMode.Auto);
+                    Cursor.SetCursor(attack, new Vector2(16, 16), CursorMode.Auto);
                     break;
                 case "Doorway":
                     Cursor.SetCursor(doorway, new Vector2(16, 16), CursorMode.Auto);
@@ -63,9 +64,14 @@ public class MouseManager : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && hitInfo.collider != null)
         {
-            if (hitInfo.collider.gameObject.CompareTag("Ground"))
+            switch (hitInfo.collider.gameObject.tag)
             {
-                onMouseClick?.Invoke(hitInfo.point);
+                case "Ground":
+                    onMouseClick?.Invoke(hitInfo.point);
+                    break;
+                case "Enemy":
+                    onEnemyClick?.Invoke(hitInfo.collider.gameObject);
+                    break;
             }
         }
     }
