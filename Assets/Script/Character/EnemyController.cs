@@ -34,11 +34,13 @@ public class EnemyController : MonoBehaviour
     private float originSpeed;
     //初始位置
     private Vector3 originPosition;
+     private CharacterStats stats;
 
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
+        stats = GetComponent<CharacterStats>();
         originSpeed = agent.speed;
         originPosition = transform.position;
         remainLookAtTime = lookAtTime;

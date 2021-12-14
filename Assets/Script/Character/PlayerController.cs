@@ -10,11 +10,13 @@ public class PlayerController : MonoBehaviour
 
     private GameObject attackTarget;
     private float lastAttackTime;
+    private CharacterStats stats;
 
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
+        stats = GetComponent<CharacterStats>();
     }
 
     // Start is called before the first frame update
