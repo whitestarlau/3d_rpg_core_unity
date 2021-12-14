@@ -10,13 +10,13 @@ public class PlayerController : MonoBehaviour
 
     private GameObject attackTarget;
     private float lastAttackTime;
-    private CharacterStats stats;
+    private CharacterStats characterStats;
 
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
-        stats = GetComponent<CharacterStats>();
+        characterStats = GetComponent<CharacterStats>();
     }
 
     // Start is called before the first frame update
@@ -46,7 +46,7 @@ public class PlayerController : MonoBehaviour
     {
         agent.isStopped = false;
         transform.LookAt(attackTarget.transform);
-        while (Vector3.Distance(attackTarget.transform.position, transform.position) > 1)
+        while (Vector3.Distance(attackTarget.transform.position, transform.position) > characterStats.attackData.attackRange)
         {
             agent.destination = attackTarget.transform.position;
             yield return null;

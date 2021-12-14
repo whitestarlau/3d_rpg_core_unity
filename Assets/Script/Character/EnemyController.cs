@@ -21,6 +21,8 @@ public class EnemyController : MonoBehaviour
     public float lookAtTime;
     private float remainLookAtTime;
 
+    private float lastAttackTime;
+
     [Header("Patrol State")]
     public float patrolRange;
     //巡逻点
@@ -34,13 +36,16 @@ public class EnemyController : MonoBehaviour
     private float originSpeed;
     //初始位置
     private Vector3 originPosition;
-     private CharacterStats stats;
+    private CharacterStats stats;
+
+    private CharacterStats characterStats;
 
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         stats = GetComponent<CharacterStats>();
+        characterStats = GetComponent<CharacterStats>();
         originSpeed = agent.speed;
         originPosition = transform.position;
         remainLookAtTime = lookAtTime;
@@ -63,6 +68,7 @@ public class EnemyController : MonoBehaviour
     {
         switchState();
         switchAnimation();
+        lastAttackTime -= Time.deltaTime;
     }
     void switchState()
     {
@@ -126,14 +132,51 @@ public class EnemyController : MonoBehaviour
                 else
                 {
                     isFollow = true;
+                    agent.isStopped = false;
                     if (attackTarget != null)
                     {
                         agent.destination = attackTarget.transform.position;
                     }
                 }
+
+                if (TargetInAttackRange() || TargetInSkillRange())
+                {
+                    Debug.Log("Plyer in attack range.");
+                    isFollow = false;
+                    agent.isStopped = true;
+                    if (lastAttackTime < 0)
+                    {
+                        Debug.Log("lastAttackTime ok.");
+                        //攻击间隔
+                        lastAttackTime = characterStats.attackData.coolDown;
+                        //暴击判断
+                        characterStats.isCritical = Random.value < characterStats.attackData.criticalChance;
+                        //执行攻击
+                        Attack();
+                    }
+                }
+                else
+                {
+                    Debug.Log("Plyer not in attack range.");
+                }
                 break;
             case EnemyState.DEAD:
                 break;
+        }
+    }
+
+    void Attack()
+    {
+        transform.LookAt(attackTarget.transform);
+        if (TargetInAttackRange())
+        {
+            //近身攻击
+            animator.SetTrigger("Attack");
+        }
+        else
+        {
+            //远程攻击
+            animator.SetTrigger("Skill");
         }
     }
 
@@ -142,6 +185,7 @@ public class EnemyController : MonoBehaviour
         animator.SetBool("Walk", isWalk);
         animator.SetBool("Chase", isChase);
         animator.SetBool("Follow", isFollow);
+        animator.SetBool("Critical", characterStats.isCritical);
     }
 
     bool FoundPlayer()
@@ -158,6 +202,33 @@ public class EnemyController : MonoBehaviour
         attackTarget = null;
         return false;
     }
+
+
+    bool TargetInAttackRange()
+    {
+        if (attackTarget != null)
+        {
+            return Vector3.Distance(attackTarget.transform.position, transform.position) <= characterStats.attackData.attackRange;
+        }
+        else
+        {
+            return false;
+        }
+
+    }
+
+    bool TargetInSkillRange()
+    {
+        if (attackTarget != null)
+        {
+            return Vector3.Distance(attackTarget.transform.position, transform.position) <= characterStats.attackData.skillRange;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
 
     void GetNewWayPoint()
     {
