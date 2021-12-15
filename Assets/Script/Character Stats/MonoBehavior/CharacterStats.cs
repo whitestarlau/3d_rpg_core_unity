@@ -6,7 +6,7 @@ public class CharacterStats : MonoBehaviour
 {
     public CharacterData_SO characterData;
     public AttackData_SO attackData;
-    
+
     [HideInInspector]
     public bool isCritical;
 
@@ -76,4 +76,25 @@ public class CharacterStats : MonoBehaviour
     }
     #endregion
 
+    #region Character Combat
+    public void TakeDamage(CharacterStats attcker, CharacterStats defender)
+    {
+        int damage = Mathf.Max(attcker.CurrentDamage() - defender.CurretnDefence, 0);
+        CurrentHealth = Mathf.Max(CurrentHealth - damage, 0);
+
+        //TODO: Update UI
+        //TODO: 经验Update
+    }
+
+    private int CurrentDamage()
+    {
+        float coreDamage = UnityEngine.Random.Range(attackData.minDamage, attackData.maxDamage);
+        if (isCritical)
+        {
+            coreDamage *= attackData.criticalMultiplier;
+            Debug.Log("Critical! coreDamage: " + coreDamage);
+        }
+        return (int)coreDamage;
+    }
+    #endregion
 }

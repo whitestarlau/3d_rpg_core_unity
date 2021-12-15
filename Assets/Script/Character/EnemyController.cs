@@ -247,4 +247,13 @@ public class EnemyController : MonoBehaviour
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, sightRadius);
     }
+
+    void Hit()
+    {
+        if (attackTarget != null)
+        {
+            var targetStatus = attackTarget.GetComponent<CharacterStats>();
+            targetStatus.TakeDamage(characterStats, targetStatus);
+        }
+    }
 }
