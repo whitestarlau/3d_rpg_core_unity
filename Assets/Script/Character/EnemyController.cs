@@ -11,6 +11,7 @@ public class EnemyController : MonoBehaviour
     private NavMeshAgent agent;
 
     private Animator animator;
+    private Collider coll;
 
     [Header("Basic Settings")]
     public float sightRadius;
@@ -32,10 +33,14 @@ public class EnemyController : MonoBehaviour
     bool isChase;
     bool isFollow;
 
+    bool isDead;
+
     //初始速度 
     private float originSpeed;
     //初始位置
     private Vector3 originPosition;
+    private Quaternion originQuaternion;
+
     private CharacterStats stats;
 
     private CharacterStats characterStats;
@@ -46,8 +51,10 @@ public class EnemyController : MonoBehaviour
         animator = GetComponent<Animator>();
         stats = GetComponent<CharacterStats>();
         characterStats = GetComponent<CharacterStats>();
+        coll = GetComponent<Collider>();
         originSpeed = agent.speed;
         originPosition = transform.position;
+        originQuaternion = transform.rotation;
         remainLookAtTime = lookAtTime;
     }
 
@@ -66,13 +73,21 @@ public class EnemyController : MonoBehaviour
 
     private void Update()
     {
+        if (characterStats.CurrentHealth == 0)
+        {
+            isDead = true;
+        }
         switchState();
         switchAnimation();
         lastAttackTime -= Time.deltaTime;
     }
     void switchState()
     {
-        if (FoundPlayer())
+        if (isDead)
+        {
+            enemyState = EnemyState.DEAD;
+        }
+        else if (FoundPlayer())
         {
             enemyState = EnemyState.CHASE;
             Debug.Log("Enemy found player.");
@@ -82,6 +97,18 @@ public class EnemyController : MonoBehaviour
         {
             case EnemyState.GUARD:
                 agent.speed = originSpeed * 0.5f;
+                isChase = false;
+                if (transform.position != originPosition)
+                {
+                    isWalk = true;
+                    agent.isStopped = false;
+                    agent.destination = originPosition;
+                    if (Vector3.SqrMagnitude(originPosition - transform.position) <= agent.stoppingDistance)
+                    {
+                        isWalk = false;
+                        transform.rotation = Quaternion.Lerp(transform.rotation, originQuaternion, 0.1f);
+                    }
+                }
                 break;
             case EnemyState.PATROL:
                 isChase = false;
@@ -161,6 +188,9 @@ public class EnemyController : MonoBehaviour
                 }
                 break;
             case EnemyState.DEAD:
+                coll.enabled = false;
+                agent.enabled = false;
+                Destroy(gameObject, 2);
                 break;
         }
     }
@@ -186,6 +216,7 @@ public class EnemyController : MonoBehaviour
         animator.SetBool("Chase", isChase);
         animator.SetBool("Follow", isFollow);
         animator.SetBool("Critical", characterStats.isCritical);
+        animator.SetBool("Death", isDead);
     }
 
     bool FoundPlayer()

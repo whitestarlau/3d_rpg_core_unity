@@ -12,6 +12,8 @@ public class PlayerController : MonoBehaviour
     private float lastAttackTime;
     private CharacterStats characterStats;
 
+    private bool isDead;
+
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -64,6 +66,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        isDead = characterStats.CurrentHealth == 0;
         switchAnimation();
         lastAttackTime -= Time.deltaTime;
     }
@@ -71,6 +74,7 @@ public class PlayerController : MonoBehaviour
     private void switchAnimation()
     {
         animator.SetFloat("Speed", agent.velocity.sqrMagnitude);
+        animator.SetBool("Death", isDead);
     }
 
     //Animation Event
