@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public enum EnemyState { GUARD, PATROL, CHASE, DEAD }
 [RequireComponent(typeof(NavMeshAgent))]
-public class EnemyController : MonoBehaviour
+public class EnemyController : MonoBehaviour, IEndGameObserver
 {
     private EnemyState enemyState;
     private NavMeshAgent agent;
@@ -71,15 +71,28 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        GameManager.Instance.AddObserver(this);
+    }
+
+    private void OnDisable()
+    {
+        GameManager.Instance.RemoveObserver(this);
+    }
+
     private void Update()
     {
         if (characterStats.CurrentHealth == 0)
         {
             isDead = true;
         }
-        switchState();
-        switchAnimation();
-        lastAttackTime -= Time.deltaTime;
+        if (!isGameEnd)
+        {
+            switchState();
+            switchAnimation();
+            lastAttackTime -= Time.deltaTime;
+        }
     }
     void switchState()
     {
@@ -286,5 +299,18 @@ public class EnemyController : MonoBehaviour
             var targetStatus = attackTarget.GetComponent<CharacterStats>();
             targetStatus.TakeDamage(characterStats, targetStatus);
         }
+    }
+
+    bool isGameEnd = false;
+    public void EndNotify()
+    {
+        //获胜动画
+        //停止所有移动
+        //停止Agent
+        isChase = false;
+        isWalk = false;
+        attackTarget = null;
+        isGameEnd = true;
+        animator.SetBool("Win", true);
     }
 }
