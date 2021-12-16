@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour
     {
         MouseManager.Instance.onMouseClick += MoveToTarget;
         MouseManager.Instance.onEnemyClick += EventAttack;
+        GameManager.Instance.RegisterPlayer(characterStats);
     }
 
     public void MoveToTarget(Vector3 target)

@@ -10,9 +10,8 @@ using UnityEngine.Events;
 
 // }
 
-public class MouseManager : MonoBehaviour
+public class MouseManager : Singleton<MouseManager>
 {
-    public static MouseManager Instance;
     // public EventVector3 onMouseClick;
     public event Action<Vector3> onMouseClick;
     public event Action<GameObject> onEnemyClick;
@@ -21,14 +20,6 @@ public class MouseManager : MonoBehaviour
 
     RaycastHit hitInfo;
 
-    private void Awake()
-    {
-        if (Instance != null)
-        {
-            Destroy(gameObject);
-        }
-        Instance = this;
-    }
     // Update is called once per frame
     void Update()
     {
