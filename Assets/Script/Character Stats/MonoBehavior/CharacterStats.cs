@@ -4,11 +4,20 @@ using UnityEngine;
 
 public class CharacterStats : MonoBehaviour
 {
+    public CharacterData_SO templeData;
     public CharacterData_SO characterData;
     public AttackData_SO attackData;
 
     [HideInInspector]
     public bool isCritical;
+
+    private void Awake()
+    {
+        if (templeData != null)
+        {
+            characterData = Instantiate(templeData);
+        }
+    }
 
     #region Read from Data_SO
     public int MaxHealth
@@ -81,9 +90,10 @@ public class CharacterStats : MonoBehaviour
     {
         int damage = Mathf.Max(attcker.CurrentDamage() - defender.CurretnDefence, 0);
         CurrentHealth = Mathf.Max(CurrentHealth - damage, 0);
-         Debug.Log("damage: " + damage);
-        if(isCritical){
-             Debug.Log("Critical!");
+        Debug.Log("damage: " + damage);
+        if (isCritical)
+        {
+            Debug.Log("Critical!");
             defender.GetComponent<Animator>().SetTrigger("Hit");
         }
         //TODO: Update UI
@@ -96,7 +106,7 @@ public class CharacterStats : MonoBehaviour
         if (isCritical)
         {
             coreDamage *= attackData.criticalMultiplier;
-            
+
         }
         return (int)coreDamage;
     }

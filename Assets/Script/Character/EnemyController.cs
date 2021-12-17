@@ -5,6 +5,7 @@ using UnityEngine.AI;
 
 public enum EnemyState { GUARD, PATROL, CHASE, DEAD }
 [RequireComponent(typeof(NavMeshAgent))]
+[RequireComponent(typeof(CharacterStats))]
 public class EnemyController : MonoBehaviour, IEndGameObserver
 {
     private EnemyState enemyState;
@@ -69,15 +70,20 @@ public class EnemyController : MonoBehaviour, IEndGameObserver
             enemyState = EnemyState.PATROL;
             GetNewWayPoint();
         }
-    }
-
-    private void OnEnable()
-    {
+        //FIXME: 场景切换后修改注册时机
         GameManager.Instance.AddObserver(this);
     }
 
+    // private void OnEnable()
+    // {
+    //     GameManager.Instance.AddObserver(this);
+    // }
+
     private void OnDisable()
     {
+        if(!GameManager.isInitialized){
+            return;
+        }
         GameManager.Instance.RemoveObserver(this);
     }
 
