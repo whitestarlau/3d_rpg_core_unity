@@ -92,7 +92,7 @@ public class EnemyController : MonoBehaviour, IEndGameObserver
     {
         if (characterStats.CurrentHealth == 0)
         {
-            Debug.Log("Enemy Dead. tag:"+this.tag+",name:"+this.name);
+            Debug.Log("Enemy Dead. tag:" + this.tag + ",name:" + this.name);
             isDead = true;
         }
         if (!isGameEnd)
@@ -305,7 +305,7 @@ public class EnemyController : MonoBehaviour, IEndGameObserver
     void Hit()
     {
         // Debug.Log("hit!");
-        if (attackTarget != null)
+        if (attackTarget != null && transform.IsFacingTarget(attackTarget.transform))
         {
             var targetStatus = attackTarget.GetComponent<CharacterStats>();
             targetStatus.TakeDamage(characterStats, targetStatus);
