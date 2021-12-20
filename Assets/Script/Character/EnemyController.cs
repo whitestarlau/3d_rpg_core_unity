@@ -16,7 +16,7 @@ public class EnemyController : MonoBehaviour, IEndGameObserver
 
     [Header("Basic Settings")]
     public float sightRadius;
-    private GameObject attackTarget;
+    protected GameObject attackTarget;
 
     public bool isGuard;
 
@@ -81,7 +81,8 @@ public class EnemyController : MonoBehaviour, IEndGameObserver
 
     private void OnDisable()
     {
-        if(!GameManager.isInitialized){
+        if (!GameManager.isInitialized)
+        {
             return;
         }
         GameManager.Instance.RemoveObserver(this);
@@ -91,6 +92,7 @@ public class EnemyController : MonoBehaviour, IEndGameObserver
     {
         if (characterStats.CurrentHealth == 0)
         {
+            Debug.Log("Enemy Dead. tag:"+this.tag+",name:"+this.name);
             isDead = true;
         }
         if (!isGameEnd)
@@ -109,7 +111,7 @@ public class EnemyController : MonoBehaviour, IEndGameObserver
         else if (FoundPlayer())
         {
             enemyState = EnemyState.CHASE;
-            Debug.Log("Enemy found player.");
+            // Debug.Log("Enemy found player.");
         }
 
         switch (enemyState)
@@ -187,7 +189,7 @@ public class EnemyController : MonoBehaviour, IEndGameObserver
 
                 if (TargetInAttackRange() || TargetInSkillRange())
                 {
-                    Debug.Log("Plyer in attack range.");
+                    // Debug.Log("Plyer in attack range.");
                     isFollow = false;
                     agent.isStopped = true;
                     if (lastAttackTime < 0)
@@ -197,18 +199,20 @@ public class EnemyController : MonoBehaviour, IEndGameObserver
                         lastAttackTime = characterStats.attackData.coolDown;
                         //暴击判断
                         characterStats.isCritical = Random.value < characterStats.attackData.criticalChance;
+                        // Debug.Log("characterStats.isCritical:"+characterStats.isCritical+",name:"+characterStats.name);
                         //执行攻击
                         Attack();
                     }
                 }
                 else
                 {
-                    Debug.Log("Plyer not in attack range.");
+                    // Debug.Log("Plyer not in attack range.");
                 }
                 break;
             case EnemyState.DEAD:
                 coll.enabled = false;
-                agent.enabled = false;
+                // agent.enabled = false;
+                agent.radius = 0;
                 Destroy(gameObject, 2);
                 break;
         }
@@ -217,15 +221,15 @@ public class EnemyController : MonoBehaviour, IEndGameObserver
     void Attack()
     {
         transform.LookAt(attackTarget.transform);
-        if (TargetInAttackRange())
+        if (TargetInSkillRange())
         {
-            //近身攻击
-            animator.SetTrigger("Attack");
+            //技能攻击
+            animator.SetTrigger("Skill");
         }
         else
         {
-            //远程攻击
-            animator.SetTrigger("Skill");
+            //近身攻击
+            animator.SetTrigger("Attack");
         }
     }
 
@@ -300,6 +304,7 @@ public class EnemyController : MonoBehaviour, IEndGameObserver
 
     void Hit()
     {
+        // Debug.Log("hit!");
         if (attackTarget != null)
         {
             var targetStatus = attackTarget.GetComponent<CharacterStats>();

@@ -6,7 +6,7 @@ using UnityEngine;
 public class AttackData_SO : ScriptableObject
 {
     public float attackRange;
-    public int skillRange;
+    public float skillRange;
     public float coolDown;
     public int minDamage;
     public int maxDamage;

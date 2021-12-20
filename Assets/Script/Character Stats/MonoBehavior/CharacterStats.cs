@@ -90,10 +90,10 @@ public class CharacterStats : MonoBehaviour
     {
         int damage = Mathf.Max(attcker.CurrentDamage() - defender.CurretnDefence, 0);
         CurrentHealth = Mathf.Max(CurrentHealth - damage, 0);
-        Debug.Log("damage: " + damage);
-        if (isCritical)
+        // Debug.Log("TakeDamage damage: " + damage+",isCritical:"+isCritical+",status:"+this.name);
+        if (attcker.isCritical)
         {
-            Debug.Log("Critical!");
+            Debug.Log("TakeDamage Critical!");
             defender.GetComponent<Animator>().SetTrigger("Hit");
         }
         //TODO: Update UI
@@ -106,7 +106,6 @@ public class CharacterStats : MonoBehaviour
         if (isCritical)
         {
             coreDamage *= attackData.criticalMultiplier;
-
         }
         return (int)coreDamage;
     }
