@@ -44,7 +44,7 @@ public class EnemyController : MonoBehaviour, IEndGameObserver
 
     private CharacterStats stats;
 
-    private CharacterStats characterStats;
+    protected CharacterStats characterStats;
 
     private void Awake()
     {
