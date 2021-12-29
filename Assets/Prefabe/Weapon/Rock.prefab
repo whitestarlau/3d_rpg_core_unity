@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 355931289065257722}
   m_Layer: 0
   m_Name: Rock
-  m_TagString: Untagged
+  m_TagString: Attackable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -96,8 +96,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42dbe04a6b6c64710820b08b29864346, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rockState: 0
   force: 15
+  damage: 8
   target: {fileID: 0}
+  breakEffect: {fileID: 2251506858821419441, guid: f3baa35fee62c401599db2b838de8447, type: 3}
 --- !u!54 &355931289065257701
 Rigidbody:
   m_ObjectHideFlags: 0

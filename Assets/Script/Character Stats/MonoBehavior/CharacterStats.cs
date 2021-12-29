@@ -100,6 +100,15 @@ public class CharacterStats : MonoBehaviour
         //TODO: 经验Update
     }
 
+
+    public void TakeDamage(int damage, CharacterStats defender)
+    {
+        int filterDamage = Mathf.Max(damage - defender.CurretnDefence, 0);
+        CurrentHealth = Mathf.Max(CurrentHealth - filterDamage, 0);
+        //TODO: Update UI
+        //TODO: 经验Update
+    }
+
     private int CurrentDamage()
     {
         float coreDamage = UnityEngine.Random.Range(attackData.minDamage, attackData.maxDamage);

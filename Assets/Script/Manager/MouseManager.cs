@@ -63,6 +63,9 @@ public class MouseManager : Singleton<MouseManager>
                 case "Enemy":
                     onEnemyClick?.Invoke(hitInfo.collider.gameObject);
                     break;
+                case "Attackable":
+                    onEnemyClick?.Invoke(hitInfo.collider.gameObject);
+                    break;
             }
         }
     }
