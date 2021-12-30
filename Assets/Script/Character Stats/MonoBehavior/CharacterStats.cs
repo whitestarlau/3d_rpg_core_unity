@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class CharacterStats : MonoBehaviour
 {
+    public event Action<int, int> UpdateHealthBarOnAttack;
     public CharacterData_SO templeData;
     public CharacterData_SO characterData;
     public AttackData_SO attackData;
@@ -96,7 +98,7 @@ public class CharacterStats : MonoBehaviour
             Debug.Log("TakeDamage Critical!");
             defender.GetComponent<Animator>().SetTrigger("Hit");
         }
-        //TODO: Update UI
+        UpdateHealthBarOnAttack?.Invoke(CurrentHealth, MaxHealth);
         //TODO: 经验Update
     }
 
@@ -105,7 +107,7 @@ public class CharacterStats : MonoBehaviour
     {
         int filterDamage = Mathf.Max(damage - defender.CurretnDefence, 0);
         CurrentHealth = Mathf.Max(CurrentHealth - filterDamage, 0);
-        //TODO: Update UI
+        UpdateHealthBarOnAttack?.Invoke(CurrentHealth, MaxHealth);
         //TODO: 经验Update
     }
 
