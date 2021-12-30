@@ -100,6 +100,10 @@ public class CharacterStats : MonoBehaviour
         }
         UpdateHealthBarOnAttack?.Invoke(CurrentHealth, MaxHealth);
         //TODO: 经验Update
+        if (CurrentHealth <= 0)
+        {
+            attcker.characterData.UpdateExp(characterData.killPoint);
+        }
     }
 
 
