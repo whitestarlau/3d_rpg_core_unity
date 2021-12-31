@@ -99,7 +99,7 @@ public class CharacterStats : MonoBehaviour
             defender.GetComponent<Animator>().SetTrigger("Hit");
         }
         UpdateHealthBarOnAttack?.Invoke(CurrentHealth, MaxHealth);
-        //TODO: 经验Update
+
         if (CurrentHealth <= 0)
         {
             attcker.characterData.UpdateExp(characterData.killPoint);
@@ -112,7 +112,11 @@ public class CharacterStats : MonoBehaviour
         int filterDamage = Mathf.Max(damage - defender.CurretnDefence, 0);
         CurrentHealth = Mathf.Max(CurrentHealth - filterDamage, 0);
         UpdateHealthBarOnAttack?.Invoke(CurrentHealth, MaxHealth);
-        //TODO: 经验Update
+        //TODO: 让攻击者获取经验而不是固定player
+        if (CurrentHealth <= 0)
+        {
+            GameManager.Instance.playerStats.characterData.UpdateExp(characterData.killPoint);
+        }
     }
 
     private int CurrentDamage()
