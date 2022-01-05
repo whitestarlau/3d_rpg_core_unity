@@ -1582,6 +1582,9 @@ GameObject:
   - component: {fileID: 2571485520394834146}
   - component: {fileID: 2571485520394834147}
   - component: {fileID: 2571485520394834148}
+  - component: {fileID: 7061202448013056935}
+  - component: {fileID: 7517273797285219013}
+  - component: {fileID: 5411847082738967906}
   m_Layer: 0
   m_Name: DogPolyart
   m_TagString: Untagged
@@ -1616,7 +1619,7 @@ Animator:
   m_GameObject: {fileID: 2571485520394834144}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: a58d63122b09e9144938cd6a1ece4824, type: 3}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 87e16b9b6e98a43569da9a2e6bdcc4a4, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1659,6 +1662,52 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4c1ed46a551442bbbda0ee2b501a1ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!54 &7061202448013056935
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2571485520394834144}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &7517273797285219013
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2571485520394834144}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2424980a5c2cf4827a327a28a6788875, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  templeData: {fileID: 11400000, guid: a5fda3ae4dae94b40a9a75baa27ea751, type: 2}
+  characterData: {fileID: 0}
+  attackData: {fileID: 11400000, guid: 48cc22c339f2847bc93605b02dcb2f3d, type: 2}
+  isCritical: 0
+--- !u!136 &5411847082738967906
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2571485520394834144}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 1.5
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.7, z: 0}
 --- !u!1 &2571485520438451732
 GameObject:
   m_ObjectHideFlags: 0
