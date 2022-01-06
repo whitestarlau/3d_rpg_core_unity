@@ -41,7 +41,7 @@ public class MouseManager : Singleton<MouseManager>
                 case "Enemy":
                     Cursor.SetCursor(attack, new Vector2(16, 16), CursorMode.Auto);
                     break;
-                case "Doorway":
+                case "Portal":
                     Cursor.SetCursor(doorway, new Vector2(16, 16), CursorMode.Auto);
                     break;
                 default:
@@ -64,6 +64,9 @@ public class MouseManager : Singleton<MouseManager>
                     onEnemyClick?.Invoke(hitInfo.collider.gameObject);
                     break;
                 case "Attackable":
+                    onEnemyClick?.Invoke(hitInfo.collider.gameObject);
+                    break;
+                case "Portal":
                     onEnemyClick?.Invoke(hitInfo.collider.gameObject);
                     break;
             }
